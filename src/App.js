@@ -1,5 +1,5 @@
 import Header from './components/header/Header';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar';
 import HomeScreen from './screens/homeScreen/HomeScreen'
 import { Container } from 'react-bootstrap';
@@ -8,7 +8,9 @@ import LoginScreen from './screens/loginScreen/LoginScreen';
 
 
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Switch,Route, Redirect } from 'react-router'
+import { Switch,Route, Redirect, useHistory } from 'react-router'
+import { useSelector } from 'react-redux';
+import WatchScreen from './screens/watchScreen/WatchScreen';
 
 
 const Layout = ({ children }) => {
@@ -36,9 +38,20 @@ const Layout = ({ children }) => {
 }
 
 function App() {
+
+
+  const {accessToken,loading}= useSelector(state=> state.auth)
+  const history=useHistory();
+
+  useEffect(()=>{
+    if(!loading && !accessToken){
+      history.push('/auth')
+    }
+  },[accessToken,loading,history])
+
   return (
     <>
-      <Router>
+      
         <Switch>
           <Route exact path='/'>
             <Layout >
@@ -58,13 +71,18 @@ function App() {
             </Layout>
           </Route>
 
+          <Route exact path='/watch/:id'>
+            <Layout >
+              <WatchScreen/>
+            </Layout>
+          </Route>
+
 
           <Route>
             <Redirect to="/"/>
           </Route>
         </Switch>
 
-      </Router>
     </>
   );
 }
