@@ -1,3 +1,4 @@
+import { filter } from 'dom-helpers'
 import React, { useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
@@ -6,7 +7,7 @@ import { useParams } from 'react-router'
 import Comments from '../../components/comments/Comments'
 import VideoHorizontal from '../../components/VideoHorizontal/VideoHorizontal'
 import VideoMetaData from '../../components/videoMetaData/VideoMetaData'
-import { getVideoById } from '../../redux/actions/videos.action'
+import { getRelatedVideo, getVideoById } from '../../redux/actions/videos.action'
 
 import './watchScreen.scss'
 
@@ -18,7 +19,12 @@ const WatchScreen = () => {
 
     useEffect(()=>{
         dispatch(getVideoById(id))
+
+        dispatch(getRelatedVideo(id))
     },[id])
+
+    const {videos,loading:relatedVideoLoading}=useSelector(state=>state.relatedVideo)
+
 
     return (
         <Row>
@@ -42,7 +48,12 @@ const WatchScreen = () => {
 
             <Col lg={4}>
                 {
-                    [...Array(10)].map(() => <VideoHorizontal />)
+                    !loading && 
+                    
+                    videos?.filter(video=>video.snippet) 
+                    .map((video) => (
+                        <VideoHorizontal video={video} key={video.id.videoId} /> 
+                    ))
                 }
             </Col>
         </Row>

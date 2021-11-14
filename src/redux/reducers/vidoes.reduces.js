@@ -3,7 +3,13 @@ import { HOME_VIDEO_FAIL,
     HOME_VIDEO_SUCCESS ,
     SELECTED_VIDEO_REQUEST,
     SELECTED_VIDEO_SUCCESS,
-    SELECTED_VIDEO_FAIL
+    SELECTED_VIDEO_FAIL,
+    RELATED_VIDEO_REQUEST,
+    RELATED_VIDEO_SUCCESS,
+    RELATED_VIDEO_FAIL,
+    SEARCHED_VIDEO_REQUEST,
+    SEARCHED_VIDEO_SUCCESS,
+    SEARCHED_VIDEO_FAIL
 } from "../actionTypes";
 
 
@@ -71,6 +77,73 @@ export const selectedVideoReducer=(state=(ThisState), action)=>{
                 
             }
         case SELECTED_VIDEO_FAIL:
+            return{
+                ...state,
+                loading:false,
+                error:payload,
+
+            }
+    
+        default:
+            return state;
+    }
+}
+const related={
+    loading:true,
+    videos:[]
+}
+export const relatedVideoReducer=(state=(related), action)=>{
+    const {payload,type}=action;
+    switch (type) {
+        case RELATED_VIDEO_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+    
+        case RELATED_VIDEO_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                videos:payload,
+                
+            }
+        case RELATED_VIDEO_FAIL:
+            return{
+                ...state,
+                loading:false,
+                error:payload,
+
+            }
+    
+        default:
+            return state;
+    }
+}
+
+
+
+const searchVideo={
+    loading:true,
+    videos:[]
+}
+export const searchVideosReducer=(state=(searchVideo), action)=>{
+    const {payload,type}=action;
+    switch (type) {
+        case SEARCHED_VIDEO_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+    
+        case SEARCHED_VIDEO_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                videos:payload,
+                
+            }
+        case SEARCHED_VIDEO_FAIL:
             return{
                 ...state,
                 loading:false,
