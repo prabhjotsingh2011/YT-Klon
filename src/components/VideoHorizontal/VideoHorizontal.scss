@@ -24,13 +24,14 @@
 
       font-size: 0.9rem;
       padding: 0.2rem;
-    //   background: #080808ec;
-      background: blue;
+      background: #080808ec;
+      // background: blue;
       border-radius: 3px;
    }
 
    &__details {
       font-size: 0.9rem;
+      font-weight: 600;
    }
 
    &__title {
@@ -39,10 +40,10 @@
       // color: #fff;
       letter-spacing: 0.3px;
 
-      @include line-clamp(2);
+      @include line-clamp(1);
    }
    &__desc {
-      @include line-clamp(2);
+      @include line-clamp(1);
       font-size: 0.9rem;
    }
 

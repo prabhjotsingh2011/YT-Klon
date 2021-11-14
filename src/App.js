@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Switch,Route, Redirect, useHistory } from 'react-router'
 import { useSelector } from 'react-redux';
 import WatchScreen from './screens/watchScreen/WatchScreen';
+import SearchScreen from './screens/searchScreen/SearchScreen';
 
 
 const Layout = ({ children }) => {
@@ -65,9 +66,9 @@ function App() {
           </Route>
 
 
-          <Route exact path='/search'>
+          <Route exact path='/search/:query'>
             <Layout >
-              <h1>search page</h1>
+              <SearchScreen/>
             </Layout>
           </Route>
 
